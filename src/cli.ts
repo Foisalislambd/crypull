@@ -126,6 +126,38 @@ program
   });
 
 program
+  .command('top')
+  .description('Show top 50 cryptocurrencies by market cap')
+  .action(async () => {
+    console.log(pc.cyan(`\nFetching top 50 cryptocurrencies...`));
+    
+    const results = await crypull.top();
+    
+    if (!results || results.length === 0) {
+      console.log(pc.red(`\n✖ Could not fetch top coins at this time.`));
+      return;
+    }
+
+    console.log(pc.green(`\n✔ Top 50 Cryptocurrencies:`));
+    console.log(pc.white(`----------------------------------------`));
+    
+    results.forEach((res, i) => {
+      const priceStr = res.priceUsd ? `$${res.priceUsd.toLocaleString(undefined, { maximumFractionDigits: 6 })}` : 'N/A';
+      const mcapStr = res.marketCap ? `$${res.marketCap.toLocaleString()}` : 'N/A';
+      
+      let changeStr = '';
+      if (res.priceChange24h !== undefined && res.priceChange24h !== null) {
+        const color = res.priceChange24h >= 0 ? pc.green : pc.red;
+        changeStr = color(`(${res.priceChange24h >= 0 ? '+' : ''}${res.priceChange24h.toFixed(2)}%)`);
+      }
+      
+      console.log(`${pc.blue(String(i + 1).padStart(2, ' '))}. ${pc.yellow(pc.bold(res.symbol.padEnd(8, ' ')))} | ${pc.green(priceStr.padEnd(12, ' '))} ${changeStr.padEnd(15, ' ')} | Mcap: ${pc.white(mcapStr)}`);
+    });
+    
+    console.log(pc.white(`----------------------------------------\n`));
+  });
+
+program
   .command('search <query>')
   .description('Search for tokens or coins across multiple providers')
   .action(async (query: string) => {

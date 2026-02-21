@@ -31,6 +31,9 @@ $ crypull info eth
 # Search for tokens
 $ crypull search doge
 
+# See the Top 50 cryptocurrencies by Market Cap
+$ crypull top
+
 # See the top 10 trending coins right now
 $ crypull trending
 
@@ -142,6 +145,9 @@ Fetches detailed info including market cap, rank, FDV, circulating/total supplie
 
 ### `crypull.search(query: string): Promise<SearchResult[]>`
 Searches for tokens by name or symbol.
+
+### `crypull.top(): Promise<TopCoin[]>`
+Gets the top 50 cryptocurrencies sorted by market capitalization.
 
 ### `crypull.trending(): Promise<TrendingCoin[]>`
 Gets the top 10 currently trending coins/tokens.

@@ -59,6 +59,17 @@ export interface SentimentData {
   lastUpdated: number;
 }
 
+export interface TopCoin {
+  id: string;
+  name: string;
+  symbol: string;
+  marketCapRank: number;
+  priceUsd: number;
+  marketCap: number;
+  volume24h: number;
+  priceChange24h: number;
+}
+
 export interface GasData {
   network: string;
   low: number;

@@ -1,4 +1,4 @@
-import { ChartData, DexPairInfo, GasData, GlobalMarketData, ICryptoProvider, PriceData, SearchResult, SentimentData, TokenInfo, TrendingCoin } from './types.js';
+import { ChartData, DexPairInfo, GasData, GlobalMarketData, ICryptoProvider, PriceData, SearchResult, SentimentData, TokenInfo, TrendingCoin, TopCoin } from './types.js';
 import { CoinGeckoProvider } from './providers/coingecko.js';
 import { DexScreenerProvider } from './providers/dexscreener.js';
 import { GeckoTerminalProvider } from './providers/geckoterminal.js';
@@ -177,6 +177,30 @@ export class Crypull {
         priceUsd: c.item.data?.price,
         priceChange24h: c.item.data?.price_change_percentage_24h?.usd,
         volume24h: c.item.data?.total_volume,
+      }));
+    } catch (e) {
+      return [];
+    }
+  }
+
+  /**
+   * Get top 50 coins by market cap
+   */
+  async top(): Promise<TopCoin[]> {
+    try {
+      const res = await fetch(`https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=50&page=1&sparkline=false`);
+      if (!res.ok) return [];
+      const data = await res.json();
+
+      return data.map((c: any) => ({
+        id: c.id,
+        name: c.name,
+        symbol: c.symbol.toUpperCase(),
+        marketCapRank: c.market_cap_rank,
+        priceUsd: c.current_price,
+        marketCap: c.market_cap,
+        volume24h: c.total_volume,
+        priceChange24h: c.price_change_percentage_24h,
       }));
     } catch (e) {
       return [];
