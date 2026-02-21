@@ -27,6 +27,46 @@ export interface DexPairInfo {
   liquidityUsd?: number;
 }
 
+export interface TrendingCoin {
+  id: string;
+  name: string;
+  symbol: string;
+  marketCapRank?: number;
+  priceUsd?: number;
+  priceChange24h?: number;
+  volume24h?: number;
+}
+
+export interface GlobalMarketData {
+  totalMarketCapUsd: number;
+  totalVolume24hUsd: number;
+  bitcoinDominancePercentage: number;
+  ethereumDominancePercentage: number;
+  activeCryptocurrencies: number;
+  lastUpdated: number;
+}
+
+export interface ChartData {
+  prices: number[];
+  timestamps: number[];
+  minPrice: number;
+  maxPrice: number;
+}
+
+export interface SentimentData {
+  value: number;       // 0 to 100
+  classification: string; // "Extreme Fear", "Fear", "Neutral", "Greed", "Extreme Greed"
+  lastUpdated: number;
+}
+
+export interface GasData {
+  network: string;
+  low: number;
+  average: number;
+  high: number;
+  baseFee?: number;
+}
+
 export interface TokenInfo {
   name: string;
   symbol: string;

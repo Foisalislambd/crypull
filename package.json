@@ -34,6 +34,7 @@
   "author": "",
   "license": "MIT",
   "devDependencies": {
+    "@types/asciichart": "^1.5.8",
     "@types/node": "^20.19.33",
     "tsup": "^8.5.1",
     "tsx": "^4.21.0",
@@ -44,6 +45,7 @@
     "node": ">=18.0.0"
   },
   "dependencies": {
+    "asciichart": "^1.5.25",
     "commander": "^14.0.3",
     "picocolors": "^1.1.1"
   }

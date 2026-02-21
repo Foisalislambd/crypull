@@ -1,4 +1,4 @@
-import { ICryptoProvider, PriceData, SearchResult, TokenInfo } from './types.js';
+import { ChartData, DexPairInfo, GasData, GlobalMarketData, ICryptoProvider, PriceData, SearchResult, SentimentData, TokenInfo, TrendingCoin } from './types.js';
 import { CoinGeckoProvider } from './providers/coingecko.js';
 import { DexScreenerProvider } from './providers/dexscreener.js';
 import { GeckoTerminalProvider } from './providers/geckoterminal.js';
@@ -135,5 +135,130 @@ export class Crypull {
       if (res) return res;
     }
     return null;
+  }
+
+  /**
+   * Get global market data
+   */
+  async market(): Promise<GlobalMarketData | null> {
+    try {
+      const res = await fetch(`https://api.coingecko.com/api/v3/global`);
+      if (!res.ok) return null;
+      const data = await res.json();
+      const d = data.data;
+
+      return {
+        totalMarketCapUsd: d.total_market_cap.usd,
+        totalVolume24hUsd: d.total_volume.usd,
+        bitcoinDominancePercentage: d.market_cap_percentage.btc,
+        ethereumDominancePercentage: d.market_cap_percentage.eth,
+        activeCryptocurrencies: d.active_cryptocurrencies,
+        lastUpdated: d.updated_at * 1000,
+      };
+    } catch (e) {
+      return null;
+    }
+  }
+
+  /**
+   * Get trending coins
+   */
+  async trending(): Promise<TrendingCoin[]> {
+    try {
+      const res = await fetch(`https://api.coingecko.com/api/v3/search/trending`);
+      if (!res.ok) return [];
+      const data = await res.json();
+
+      return data.coins.slice(0, 10).map((c: any) => ({
+        id: c.item.id,
+        name: c.item.name,
+        symbol: c.item.symbol.toUpperCase(),
+        marketCapRank: c.item.market_cap_rank,
+        priceUsd: c.item.data?.price,
+        priceChange24h: c.item.data?.price_change_percentage_24h?.usd,
+        volume24h: c.item.data?.total_volume,
+      }));
+    } catch (e) {
+      return [];
+    }
+  }
+
+  /**
+   * Get fear and greed index
+   */
+  async sentiment(): Promise<SentimentData | null> {
+    try {
+      const res = await fetch(`https://api.alternative.me/fng/?limit=1`);
+      if (!res.ok) return null;
+      const data = await res.json();
+      const item = data.data[0];
+
+      return {
+        value: parseInt(item.value),
+        classification: item.value_classification,
+        lastUpdated: parseInt(item.timestamp) * 1000,
+      };
+    } catch (e) {
+      return null;
+    }
+  }
+
+  /**
+   * Get current ethereum gas prices (in Gwei)
+   */
+  async gas(): Promise<GasData | null> {
+    try {
+      // Using Etherscan public API (rate limited but works for basic usage)
+      const res = await fetch(`https://api.etherscan.io/api?module=gastracker&action=gasoracle`);
+      if (!res.ok) return null;
+      const data = await res.json();
+      
+      if (data.status !== '1') return null;
+
+      return {
+        network: 'Ethereum',
+        low: parseFloat(data.result.SafeGasPrice),
+        average: parseFloat(data.result.ProposeGasPrice),
+        high: parseFloat(data.result.FastGasPrice),
+        baseFee: parseFloat(data.result.suggestBaseFee),
+      };
+    } catch (e) {
+      return null;
+    }
+  }
+
+  /**
+   * Get historical chart data for a coin
+   * @param query Coin symbol or ID
+   * @param days Number of days (e.g. 1, 7, 30)
+   */
+  async chart(query: string, days: number = 7): Promise<ChartData | null> {
+    try {
+      let id = query.toLowerCase();
+      // Try to find the correct coingecko ID if a symbol is passed
+      const searchRes = await this.coinGecko.search(id);
+      const match = searchRes.find(s => s.symbol.toLowerCase() === id || s.id === id);
+      if (match && match.id) {
+        id = match.id;
+      }
+
+      const res = await fetch(`https://api.coingecko.com/api/v3/coins/${id}/market_chart?vs_currency=usd&days=${days}`);
+      if (!res.ok) return null;
+      const data = await res.json();
+
+      if (!data.prices || data.prices.length === 0) return null;
+
+      const prices = data.prices.map((p: any) => p[1]);
+      const timestamps = data.prices.map((p: any) => p[0]);
+
+      return {
+        prices,
+        timestamps,
+        minPrice: Math.min(...prices),
+        maxPrice: Math.max(...prices),
+      };
+    } catch (e) {
+      return null;
+    }
   }
 }

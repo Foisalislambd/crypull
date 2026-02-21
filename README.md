@@ -27,10 +27,24 @@ $ crypull price 0x6982508145454Ce325dDbE47a25d4ec3d2311933
 
 # Get deep info (market cap, volume, FDV, liquidity, etc.)
 $ crypull info eth
-$ crypull info solana
 
 # Search for tokens
 $ crypull search doge
+
+# See the top 10 trending coins right now
+$ crypull trending
+
+# See a global market overview
+$ crypull market
+
+# Check the Crypto Fear & Greed Index
+$ crypull sentiment
+
+# Check Ethereum gas prices
+$ crypull gas
+
+# Draw an ASCII chart of historical prices in your terminal!
+$ crypull chart btc --days 30
 ```
 
 ## Features
@@ -128,6 +142,21 @@ Fetches detailed info including market cap, rank, FDV, circulating/total supplie
 
 ### `crypull.search(query: string): Promise<SearchResult[]>`
 Searches for tokens by name or symbol.
+
+### `crypull.trending(): Promise<TrendingCoin[]>`
+Gets the top 10 currently trending coins/tokens.
+
+### `crypull.market(): Promise<GlobalMarketData | null>`
+Gets global market overview (Total Market Cap, Dominance, etc).
+
+### `crypull.sentiment(): Promise<SentimentData | null>`
+Gets the current Crypto Fear & Greed Index.
+
+### `crypull.gas(): Promise<GasData | null>`
+Gets current Ethereum network gas prices.
+
+### `crypull.chart(query: string, days?: number): Promise<ChartData | null>`
+Gets historical price chart data for a coin to draw visualizations.
 
 ## Supported Providers
 - **Coinpaprika:** Provides extensive market data for free without an API key.
