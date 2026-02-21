@@ -16,6 +16,17 @@ export interface TokenLinks {
   [key: string]: string | undefined;
 }
 
+export interface DexPairInfo {
+  dexId: string;
+  url: string;
+  pairAddress: string;
+  baseTokenSymbol: string;
+  quoteTokenSymbol: string;
+  priceUsd: number;
+  volume24h?: number;
+  liquidityUsd?: number;
+}
+
 export interface TokenInfo {
   name: string;
   symbol: string;
@@ -44,6 +55,9 @@ export interface TokenInfo {
   atlDate?: string;
 
   links?: TokenLinks;
+
+  // Trading Pairs (mainly for DEX data)
+  pairs?: DexPairInfo[];
   
   source: string;
   lastUpdated: number;

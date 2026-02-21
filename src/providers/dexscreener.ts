@@ -1,4 +1,4 @@
-import { ICryptoProvider, PriceData, SearchResult, TokenInfo } from '../types.js';
+import { DexPairInfo, ICryptoProvider, PriceData, SearchResult, TokenInfo } from '../types.js';
 
 export class DexScreenerProvider implements ICryptoProvider {
   name = 'DexScreener';
@@ -43,6 +43,18 @@ export class DexScreenerProvider implements ICryptoProvider {
       // The first pair is usually the most liquid one
       const pair = data.pairs[0];
       
+      // Map out all the pairs available on DEXs for this token
+      const mappedPairs: DexPairInfo[] = data.pairs.slice(0, 10).map((p: any) => ({
+        dexId: p.dexId,
+        url: p.url,
+        pairAddress: p.pairAddress,
+        baseTokenSymbol: p.baseToken.symbol,
+        quoteTokenSymbol: p.quoteToken.symbol,
+        priceUsd: parseFloat(p.priceUsd) || 0,
+        volume24h: p.volume?.h24,
+        liquidityUsd: p.liquidity?.usd,
+      }));
+
       return {
         name: pair.baseToken.name,
         symbol: pair.baseToken.symbol.toUpperCase(),
@@ -53,6 +65,7 @@ export class DexScreenerProvider implements ICryptoProvider {
         volume24h: pair.volume?.h24,
         liquidityUsd: pair.liquidity?.usd,
         priceChangePercentage24h: pair.priceChange?.h24,
+        pairs: mappedPairs,
         links: {
           website: pair.info?.websites?.[0]?.url,
           twitter: pair.info?.socials?.find((s: any) => s.type === 'twitter')?.url,

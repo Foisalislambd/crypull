@@ -108,6 +108,16 @@ program
       const truncated = desc.length > 300 ? desc.substring(0, 300) + '...' : desc;
       console.log(pc.gray(truncated));
     }
+
+    if (data.pairs && data.pairs.length > 0) {
+      console.log(pc.white(`\n--- Top Trading Pairs ---`));
+      data.pairs.slice(0, 5).forEach((p, i) => {
+        const title = `${p.baseTokenSymbol}/${p.quoteTokenSymbol}`;
+        const priceStr = p.priceUsd ? `$${p.priceUsd.toLocaleString(undefined, { maximumFractionDigits: 6 })}` : 'N/A';
+        const volStr = p.volume24h ? `$${p.volume24h.toLocaleString(undefined, { maximumFractionDigits: 0 })}` : 'N/A';
+        console.log(`${pc.blue(String(i + 1) + '.')} ${pc.yellow(title.padEnd(12, ' '))} | ${pc.green(priceStr.padEnd(12, ' '))} | Vol: ${pc.white(volStr)} | DEX: ${pc.magenta(p.dexId)}`);
+      });
+    }
     
     console.log(pc.white(`\n----------------------------------------`));
     console.log(`${pc.gray('Updated:')}   ${new Date(data.lastUpdated).toLocaleTimeString()}`);

@@ -1,4 +1,4 @@
-import { ICryptoProvider, PriceData, SearchResult, TokenInfo } from '../types.js';
+import { DexPairInfo, ICryptoProvider, PriceData, SearchResult, TokenInfo } from '../types.js';
 
 export class GeckoTerminalProvider implements ICryptoProvider {
   name = 'GeckoTerminal';
@@ -48,6 +48,10 @@ export class GeckoTerminalProvider implements ICryptoProvider {
 
       const attrs = json.data.attributes;
 
+      // Try to get pairs from pools list if geckoterminal provides it via another endpoint or included relationships
+      // For now, GeckoTerminal's token endpoint doesn't return rich pairs list natively without separate call.
+      // So we map what we can.
+      
       return {
         name: attrs.name,
         symbol: attrs.symbol.toUpperCase(),
