@@ -10,6 +10,29 @@ It's designed to be extremely human-friendly, zero-dependency (using native `fet
 npm install crypull
 ```
 
+Or install it globally to use the CLI:
+
+```bash
+npm install -g crypull
+```
+
+## CLI Usage
+
+Crypull comes with a beautiful, built-in CLI for terminal use:
+
+```bash
+# Get the quick price of a token or coin
+$ crypull price btc
+$ crypull price 0x6982508145454Ce325dDbE47a25d4ec3d2311933
+
+# Get deep info (market cap, volume, FDV, liquidity, etc.)
+$ crypull info eth
+$ crypull info solana
+
+# Search for tokens
+$ crypull search doge
+```
+
 ## Features
 
 - **Smart Routing:** Automatically detects whether your query is a symbol (like `BTC`) or a contract address (like `0x...`) and routes it to the most appropriate provider.
