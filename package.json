@@ -1,0 +1,43 @@
+{
+  "name": "crypull",
+  "version": "1.0.0",
+  "description": "All-in-one Node.js package to fetch cryptocurrency prices and token info from CoinGecko, GeckoTerminal, Dexscreener, and Binance.",
+  "main": "./dist/index.js",
+  "module": "./dist/index.mjs",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.mjs",
+      "require": "./dist/index.js"
+    }
+  },
+  "scripts": {
+    "build": "tsup",
+    "dev": "tsx examples/basic.ts",
+    "test": "vitest run"
+  },
+  "keywords": [
+    "crypto",
+    "price",
+    "coingecko",
+    "geckoterminal",
+    "dexscreener",
+    "binance",
+    "token",
+    "defi",
+    "api"
+  ],
+  "author": "",
+  "license": "MIT",
+  "devDependencies": {
+    "@types/node": "^20.19.33",
+    "tsup": "^8.5.1",
+    "tsx": "^4.21.0",
+    "typescript": "^5.9.3",
+    "vitest": "^1.0.0"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}
