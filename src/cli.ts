@@ -53,14 +53,37 @@ program
     if (data.marketCap) {
       console.log(`${pc.gray('MarketCap:')} ${pc.white('$' + data.marketCap.toLocaleString())}`);
     }
+    if (data.marketCapRank) {
+      console.log(`${pc.gray('Rank:')}      ${pc.magenta('#' + data.marketCapRank)}`);
+    }
     if (data.fdv) {
       console.log(`${pc.gray('FDV:')}       ${pc.white('$' + data.fdv.toLocaleString())}`);
+    }
+    if (data.circulatingSupply) {
+      console.log(`${pc.gray('Circ. Sup:')} ${pc.white(data.circulatingSupply.toLocaleString())}`);
+    }
+    if (data.totalSupply) {
+      console.log(`${pc.gray('Total Sup:')} ${pc.white(data.totalSupply.toLocaleString())}`);
+    }
+    if (data.maxSupply) {
+      console.log(`${pc.gray('Max Sup:')}   ${pc.white(data.maxSupply.toLocaleString())}`);
     }
     if (data.volume24h) {
       console.log(`${pc.gray('24h Vol:')}   ${pc.white('$' + data.volume24h.toLocaleString())}`);
     }
+    if (data.priceChangePercentage24h !== undefined) {
+      const pc24 = data.priceChangePercentage24h;
+      const color = pc24 >= 0 ? pc.green : pc.red;
+      console.log(`${pc.gray('24h %:')}     ${color(pc24.toFixed(2) + '%')}`);
+    }
     if (data.liquidityUsd) {
       console.log(`${pc.gray('Liquidity:')} ${pc.white('$' + data.liquidityUsd.toLocaleString())}`);
+    }
+    if (data.ath) {
+      console.log(`${pc.gray('ATH:')}       ${pc.green('$' + data.ath.toLocaleString())} ${data.athDate ? pc.gray(`(${new Date(data.athDate).toLocaleDateString()})`) : ''}`);
+    }
+    if (data.atl) {
+      console.log(`${pc.gray('ATL:')}       ${pc.red('$' + data.atl.toLocaleString())} ${data.atlDate ? pc.gray(`(${new Date(data.atlDate).toLocaleDateString()})`) : ''}`);
     }
     if (data.network) {
       console.log(`${pc.gray('Network:')}   ${pc.magenta(data.network)}`);
@@ -68,7 +91,25 @@ program
     if (data.address) {
       console.log(`${pc.gray('Address:')}   ${pc.gray(data.address)}`);
     }
+
+    if (data.links && Object.values(data.links).some(l => !!l)) {
+      console.log(pc.white(`\n--- Links ---`));
+      if (data.links.website) console.log(`${pc.gray('Website:')}   ${pc.blue(data.links.website)}`);
+      if (data.links.twitter) console.log(`${pc.gray('Twitter:')}   ${pc.blue(data.links.twitter)}`);
+      if (data.links.telegram) console.log(`${pc.gray('Telegram:')}  ${pc.blue(data.links.telegram)}`);
+      if (data.links.discord) console.log(`${pc.gray('Discord:')}   ${pc.blue(data.links.discord)}`);
+      if (data.links.github) console.log(`${pc.gray('GitHub:')}    ${pc.blue(data.links.github)}`);
+    }
+
+    if (data.description && data.description.length > 0) {
+      console.log(pc.white(`\n--- Description ---`));
+      // Truncate to 300 chars to not flood terminal
+      const desc = data.description.replace(/(<([^>]+)>)/gi, ""); // strip html
+      const truncated = desc.length > 300 ? desc.substring(0, 300) + '...' : desc;
+      console.log(pc.gray(truncated));
+    }
     
+    console.log(pc.white(`\n----------------------------------------`));
     console.log(`${pc.gray('Updated:')}   ${new Date(data.lastUpdated).toLocaleTimeString()}`);
     console.log(pc.white(`----------------------------------------\n`));
   });

@@ -124,7 +124,7 @@ const price = await customCrypull.price('ETH');
 Fetches the basic price of a token. `query` can be a symbol or an address.
 
 ### `crypull.info(query: string, network?: string): Promise<TokenInfo | null>`
-Fetches detailed info (market cap, FDV, 24h volume, liquidity).
+Fetches detailed info including market cap, rank, FDV, circulating/total supplies, 24h volume, liquidity, price changes, all-time high/low, social links, and descriptions.
 
 ### `crypull.search(query: string): Promise<SearchResult[]>`
 Searches for tokens by name or symbol.

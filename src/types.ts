@@ -7,16 +7,44 @@ export interface PriceData {
   lastUpdated: number;
 }
 
+export interface TokenLinks {
+  website?: string;
+  twitter?: string;
+  telegram?: string;
+  discord?: string;
+  github?: string;
+  [key: string]: string | undefined;
+}
+
 export interface TokenInfo {
   name: string;
   symbol: string;
   address?: string;
   network?: string;
+  description?: string;
   priceUsd: number;
   marketCap?: number;
+  marketCapRank?: number;
   fdv?: number; // Fully Diluted Valuation
+  circulatingSupply?: number;
+  totalSupply?: number;
+  maxSupply?: number;
   volume24h?: number;
   liquidityUsd?: number;
+  
+  // Price Changes
+  priceChange24h?: number;
+  priceChangePercentage24h?: number;
+  priceChangePercentage7d?: number;
+  
+  // All Time High / Low
+  ath?: number;
+  athDate?: string;
+  atl?: number;
+  atlDate?: string;
+
+  links?: TokenLinks;
+  
   source: string;
   lastUpdated: number;
 }

@@ -52,6 +52,13 @@ export class DexScreenerProvider implements ICryptoProvider {
         fdv: pair.fdv,
         volume24h: pair.volume?.h24,
         liquidityUsd: pair.liquidity?.usd,
+        priceChangePercentage24h: pair.priceChange?.h24,
+        links: {
+          website: pair.info?.websites?.[0]?.url,
+          twitter: pair.info?.socials?.find((s: any) => s.type === 'twitter')?.url,
+          telegram: pair.info?.socials?.find((s: any) => s.type === 'telegram')?.url,
+          discord: pair.info?.socials?.find((s: any) => s.type === 'discord')?.url,
+        },
         source: this.name,
         lastUpdated: Date.now(),
       };
