@@ -1,8 +1,8 @@
 # Crypull
 
-Crypull is an all-in-one Node.js + TypeScript package that allows users to fetch cryptocurrency prices, token info, and search across multiple free API platforms including **CoinGecko**, **DexScreener**, **GeckoTerminal**, and **Binance**.
+Crypull is an all-in-one Node.js + TypeScript package that allows users to fetch cryptocurrency prices, token info, and search across multiple free API platforms including **CoinGecko**, **DexScreener**, **GeckoTerminal**, **Binance**, **Coinpaprika**, **CoinCap**, and **CryptoCompare**.
 
-It's designed to be extremely human-friendly, zero-dependency (using native `fetch`), and smart enough to route your queries to the best provider automatically.
+It's designed to be extremely human-friendly, zero-dependency (using native `fetch`), and smart enough to route your queries to the best provider automatically. It gracefully handles public APIs without requiring you to set up any API keys at all.
 
 ## Installation
 
@@ -13,7 +13,7 @@ npm install crypull
 ## Features
 
 - **Smart Routing:** Automatically detects whether your query is a symbol (like `BTC`) or a contract address (like `0x...`) and routes it to the most appropriate provider.
-- **Multiple Providers:** Fetches data from Binance, CoinGecko, DexScreener, and GeckoTerminal to ensure maximum coverage for both CEX coins and new DEX tokens.
+- **Multiple Providers:** Fetches data from Binance, CoinGecko, DexScreener, GeckoTerminal, Coinpaprika, CoinCap, and CryptoCompare. Ensures maximum coverage for both CEX coins and new DEX tokens.
 - **Zero Dependencies:** Uses the native Node.js `fetch` API.
 - **TypeScript Native:** Fully typed responses out of the box.
 
@@ -79,20 +79,20 @@ console.log(results);
 
 ### 3. Custom Instances
 
-If you want to configure your own instance or limit the providers being used, you can instantiate the `Crypull` class:
+If you want to configure your own instance or explicitly limit the providers being used, you can instantiate the `Crypull` class:
 
 ```typescript
 import { Crypull, CoinGeckoProvider, BinanceProvider } from 'crypull';
 
-// Only use CoinGecko and Binance
-const myCrypull = new Crypull({
+// Define exactly which providers you want to use
+const customCrypull = new Crypull({
   providers: [
     new BinanceProvider(),
     new CoinGeckoProvider()
   ]
 });
 
-const price = await myCrypull.price('ETH');
+const price = await customCrypull.price('ETH');
 ```
 
 ## API Reference
@@ -107,6 +107,9 @@ Fetches detailed info (market cap, FDV, 24h volume, liquidity).
 Searches for tokens by name or symbol.
 
 ## Supported Providers
+- **Coinpaprika:** Provides extensive market data for free without an API key.
+- **CoinCap:** Fast, real-time pricing and market activity API.
+- **CryptoCompare:** High-quality market data (works completely free without an API key).
 - **Binance:** Extremely fast for top CEX pairs.
 - **CoinGecko:** Broadest coverage for general coins and historical market data.
 - **DexScreener:** Best for new and trending DEX tokens, deep liquidity data.
