@@ -31,7 +31,11 @@
     "defi",
     "api"
   ],
-  "author": "",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Foisalislambd/crypull.git"
+  },
+  "author": "Md Foisal Islam <https://github.com/Foisalislambd>",
   "license": "MIT",
   "devDependencies": {
     "@types/asciichart": "^1.5.8",

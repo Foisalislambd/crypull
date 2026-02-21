@@ -10,6 +10,7 @@
 ![NodeJS](https://img.shields.io/badge/Node.js-43853D?style=for-the-badge&logo=node.js&logoColor=white)
 ![npm](https://img.shields.io/badge/npm-CB3837?style=for-the-badge&logo=npm&logoColor=white)
 ![License](https://img.shields.io/badge/License-MIT-blue.svg?style=for-the-badge)
+[![GitHub](https://img.shields.io/badge/GitHub-Repository-black?style=for-the-badge&logo=github)](https://github.com/Foisalislambd/crypull)
 
 </div>
 
@@ -204,6 +205,6 @@ Crypull queries data from the following platforms. It handles all rate-limits gr
 
 <div align="center">
 
-**Built with ❤️ for Web3 Developers**
+**Built with ❤️ for Web3 Developers by [Md Foisal Islam](https://github.com/Foisalislambd)**
 
 </div>
