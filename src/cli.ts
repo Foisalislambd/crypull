@@ -348,64 +348,67 @@ async function interactiveMode() {
   console.clear();
   intro(pc.bgCyan(pc.black(' crypull CLI ')));
 
-  const action = await select({
-    message: 'What would you like to do?',
-    options: [
-      { value: 'price', label: '💰 Get token price' },
-      { value: 'info', label: 'ℹ️  Get detailed token info' },
-      { value: 'top', label: '🏆 Show top 50 cryptocurrencies' },
-      { value: 'search', label: '🔍 Search for a token' },
-      { value: 'trending', label: '🔥 Show trending coins' },
-      { value: 'market', label: '🌍 Show global market overview' },
-      { value: 'sentiment', label: '🎭 Show Fear & Greed Index' },
-      { value: 'gas', label: '⛽ Show ETH gas prices' },
-      { value: 'chart', label: '📈 Show historical price chart' },
-    ]
-  });
-
-  if (isCancel(action)) {
-    outro('Goodbye!');
-    process.exit(0);
-  }
-
-  if (['price', 'info', 'search', 'chart'].includes(action as string)) {
-    const query = await text({
-      message: 'Enter token symbol or contract address:',
-      placeholder: 'e.g., btc, ethereum, 0x...',
-      validate: (value) => {
-        if (!value) return 'Please enter a valid query.';
-      }
+  while (true) {
+    const action = await select({
+      message: 'What would you like to do?',
+      options: [
+        { value: 'price', label: '💰 Get token price' },
+        { value: 'info', label: 'ℹ️  Get detailed token info' },
+        { value: 'top', label: '🏆 Show top 50 cryptocurrencies' },
+        { value: 'search', label: '🔍 Search for a token' },
+        { value: 'trending', label: '🔥 Show trending coins' },
+        { value: 'market', label: '🌍 Show global market overview' },
+        { value: 'sentiment', label: '🎭 Show Fear & Greed Index' },
+        { value: 'gas', label: '⛽ Show ETH gas prices' },
+        { value: 'chart', label: '📈 Show historical price chart' },
+        { value: 'exit', label: '❌ Exit' },
+      ]
     });
 
-    if (isCancel(query)) {
+    if (isCancel(action) || action === 'exit') {
       outro('Goodbye!');
       process.exit(0);
     }
-    
-    if (action === 'price') await handlePrice(query as string);
-    else if (action === 'info') await handleInfo(query as string);
-    else if (action === 'search') await handleSearch(query as string);
-    else if (action === 'chart') {
-      const days = await text({
-        message: 'Enter number of days for the chart (default 7):',
-        placeholder: '7',
-        defaultValue: '7'
+
+    if (['price', 'info', 'search', 'chart'].includes(action as string)) {
+      const query = await text({
+        message: 'Enter token symbol or contract address:',
+        placeholder: 'e.g., btc, ethereum, 0x...',
+        validate: (value) => {
+          if (!value) return 'Please enter a valid query.';
+        }
       });
-      if (isCancel(days)) {
+
+      if (isCancel(query)) {
         outro('Goodbye!');
         process.exit(0);
       }
-      await handleChart(query as string, { days: days as string });
+      
+      if (action === 'price') await handlePrice(query as string);
+      else if (action === 'info') await handleInfo(query as string);
+      else if (action === 'search') await handleSearch(query as string);
+      else if (action === 'chart') {
+        const days = await text({
+          message: 'Enter number of days for the chart (default 7):',
+          placeholder: '7',
+          defaultValue: '7'
+        });
+        if (isCancel(days)) {
+          outro('Goodbye!');
+          process.exit(0);
+        }
+        await handleChart(query as string, { days: days as string });
+      }
+    } else {
+      if (action === 'top') await handleTop();
+      else if (action === 'trending') await handleTrending();
+      else if (action === 'market') await handleMarket();
+      else if (action === 'sentiment') await handleSentiment();
+      else if (action === 'gas') await handleGas();
     }
-  } else {
-    if (action === 'top') await handleTop();
-    else if (action === 'trending') await handleTrending();
-    else if (action === 'market') await handleMarket();
-    else if (action === 'sentiment') await handleSentiment();
-    else if (action === 'gas') await handleGas();
+    
+    console.log(pc.gray('\n---\n'));
   }
-
-  outro(pc.green('Done!'));
 }
 
 if (process.argv.length <= 2) {
