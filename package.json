@@ -1,6 +1,6 @@
 {
   "name": "crypull",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "All-in-one Node.js package to fetch cryptocurrency prices and token info from CoinGecko, GeckoTerminal, Dexscreener, and Binance.",
   "main": "./dist/index.js",
   "module": "./dist/index.mjs",
