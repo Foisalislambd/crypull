@@ -297,6 +297,16 @@ const handleChart = async (query: string, options: { days: string }) => {
   console.log(pc.white(`\n` + asciichart.plot(data.prices, chartConfig) + `\n`));
 };
 
+const handleDonate = () => {
+  console.log(pc.cyan(`\n💖 Support the development of crypull:`));
+  console.log(pc.white(`----------------------------------------`));
+  console.log(`${pc.yellow('BTC:')}        ${pc.white('bc1qj4zt3lva4r68xspayg0p8s4hyg40nhjz8fuhqq')}`);
+  console.log(`${pc.blue('EVM (All):')}  ${pc.white('0x63a875d0c4Dad8E18B95D844caE6FF915dF0a2BD')}`);
+  console.log(`${pc.green('Solana:')}     ${pc.white('8J5VvZu6ayQa4XnSAAzx4YX3QsXYyyNrP4Zr7JEx1KFY')}`);
+  console.log(`${pc.red('TRX:')}        ${pc.white('TPgZSrHUhKdjyMwaGd15utJvsbk85oBbit')}`);
+  console.log(pc.white(`----------------------------------------\n`));
+};
+
 // Register commands
 program
   .command('price <query>')
@@ -344,6 +354,11 @@ program
   .option('-d, --days <days>', 'Number of days to chart', '7')
   .action(handleChart);
 
+program
+  .command('donate')
+  .description('Show donation addresses to support development')
+  .action(handleDonate);
+
 async function interactiveMode() {
   console.clear();
   intro(pc.bgCyan(pc.black(' crypull CLI ')));
@@ -361,6 +376,7 @@ async function interactiveMode() {
         { value: 'sentiment', label: '🎭 Show Fear & Greed Index' },
         { value: 'gas', label: '⛽ Show ETH gas prices' },
         { value: 'chart', label: '📈 Show historical price chart' },
+        { value: 'donate', label: '💖 Donate / Support' },
         { value: 'exit', label: '❌ Exit' },
       ]
     });
@@ -405,6 +421,7 @@ async function interactiveMode() {
       else if (action === 'market') await handleMarket();
       else if (action === 'sentiment') await handleSentiment();
       else if (action === 'gas') await handleGas();
+      else if (action === 'donate') handleDonate();
     }
     
     console.log(pc.gray('\n---\n'));

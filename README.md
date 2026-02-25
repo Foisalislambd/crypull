@@ -28,6 +28,7 @@
   - [6. Global Market Data (`market`)](#6-global-market-overview)
   - [7. Ethereum Gas Tracker (`gas`)](#7-ethereum-gas-tracker)
   - [8. Fear & Greed Index (`sentiment`)](#8-fear--greed-index)
+  - [9. Donate / Support (`donate`)](#9-donate--support)
 - [🛠️ Usage in Your Project (TypeScript / Node.js)](#%EF%B8%8F-usage-in-your-project-typescript--nodejs)
   - [1. Import and Initialize](#1-import-and-initialize)
   - [2. Available API Methods](#2-available-api-methods)
@@ -118,6 +119,12 @@ Check current market sentiment (e.g., Extreme Fear vs. Extreme Greed).
 $ crypull sentiment
 ```
 
+### 9. Donate / Support
+Show donation addresses to support development.
+```bash
+$ crypull donate
+```
+
 ---
 
 ## 🛠️ Usage in Your Project (TypeScript / Node.js)
@@ -200,6 +207,17 @@ Crypull queries data from the following platforms. It handles all rate-limits gr
 - **CoinCap:** Fast, real-time pricing and market activity.
 - **CryptoCompare:** High-quality fallback market data.
 - **GeckoTerminal:** Fallback for custom networks and liquidity pools not fully indexed elsewhere.
+
+---
+
+## 💖 Donate
+
+If you find this project useful, consider supporting the development!
+
+- **BTC:** `bc1qj4zt3lva4r68xspayg0p8s4hyg40nhjz8fuhqq`
+- **EVM (All Chains):** `0x63a875d0c4Dad8E18B95D844caE6FF915dF0a2BD`
+- **Solana:** `8J5VvZu6ayQa4XnSAAzx4YX3QsXYyyNrP4Zr7JEx1KFY`
+- **TRX:** `TPgZSrHUhKdjyMwaGd15utJvsbk85oBbit`
 
 ---
 
