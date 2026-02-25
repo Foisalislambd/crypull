@@ -232,8 +232,8 @@ export class Crypull {
    */
   async gas(): Promise<GasData | null> {
     try {
-      // Using Etherscan public API (rate limited but works for basic usage)
-      const res = await fetch(`https://api.etherscan.io/api?module=gastracker&action=gasoracle`);
+      // Using Etherscan public API V2 (rate limited but works for basic usage)
+      const res = await fetch(`https://api.etherscan.io/v2/api?chainid=1&module=gastracker&action=gasoracle`);
       if (!res.ok) return null;
       const data = await res.json();
       
